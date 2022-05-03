@@ -1,23 +1,67 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect, useRef } from "react";
+import "./App.css";
+import Header from "./components/Header";
+import img1 from './images/fm1.jpg';
+import img2 from './images/fm2.jpg';
+import img3 from './images/fm3.jpg';
+import img4 from './images/fm4.jpg';
+import img5 from './images/fm5.jpg';
+import img6 from './images/fm6.jpg';
 
 function App() {
+    const [imageList, setImageList] = useState({list: [img1,img2,img3]});
+    const [page, setPage] = useState(1);
+    const loader = useRef(null);
+
+    const handleScroll = (items) => {
+      const target = items[0];
+      if (target.isIntersecting) {   
+          setPage((page) => page + 1)
+      }
+  }
+  
+    useEffect(() => {
+         var options = {
+            root: null,
+            rootMargin: "20px",
+            threshold: 1.0
+         };
+
+         const observer = new IntersectionObserver(handleScroll, options);
+         if (loader.current) {
+            observer.observe(loader.current)
+         }
+
+    }, []);
+
+
+    useEffect(() => {
+      // Adding new images when user gets to the bottom of the page
+        const newList = imageList.list.concat([img4,img5,img6]);
+        setImageList({
+            list: newList
+        })
+    }, [page])
+
+
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+    <div>
+      <Header />
+      <div className="container">
+        <div className="img-container">
+        {
+          imageList.list.map((post, index) => {
+          return (
+              <div key={index}>
+              <img src={post} alt=""/>
+              </div>)})
+        }
+        <div ref={loader}>
+          <h3>Loading...</h3>
+        </div>
+       </div>
+      </div>
     </div>
   );
 }
