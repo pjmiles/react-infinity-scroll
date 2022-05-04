@@ -27,9 +27,9 @@ function App() {
             threshold: 1.0
          };
 
-         const observer = new IntersectionObserver(handleScroll, options);
+         const user = new IntersectionObserver(handleScroll, options);
          if (loader.current) {
-            observer.observe(loader.current)
+            user.observe(loader.current)
          }
 
     }, []);
@@ -37,7 +37,7 @@ function App() {
 
     useEffect(() => {
       // Adding new images when user gets to the bottom of the page
-        const newList = imageList.list.concat([img4,img5,img6]);
+        const newList = imageList.list.concat([img1,img2,img3,img4,img5,img6]);
         setImageList({
             list: newList
         })
