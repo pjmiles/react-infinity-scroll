@@ -9,8 +9,9 @@ import img5 from './images/fm5.jpg';
 import img6 from './images/fm6.jpg';
 
 function App() {
-    const [imageList, setImageList] = useState({list: [img1,img2,img3]});
+    const [imageList, setImageList] = useState({list: [img1,img2,img3,img4,img5,img6]});
     const [page, setPage] = useState(1);
+    
     const loader = useRef(null);
 
     const handleScroll = (items) => {
@@ -34,7 +35,6 @@ function App() {
 
     }, []);
 
-
     useEffect(() => {
       // Adding new images when user gets to the bottom of the page
         const newList = imageList.list.concat([img1,img2,img3,img4,img5,img6]);
@@ -42,8 +42,6 @@ function App() {
             list: newList
         })
     }, [page])
-
-
 
   return (
     <div>
